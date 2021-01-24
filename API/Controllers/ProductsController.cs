@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,34 +12,39 @@ namespace API.Controllers
     [ApiController, Route("api/products")]
     public class ProductsController : ControllerBase
     {
-        private readonly StoreContext _context;
-        public ProductsController(StoreContext context)
+        private readonly IProductRepository _repository;
+        public ProductsController(IProductRepository repository)
         {
-            _context = context;
+            _repository = repository;
 
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _repository.GetProductsAsync();
             return Ok(products);
         }
-        
+
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Product>>> GetProduct(Guid id)
+        public async Task<ActionResult<IReadOnlyList<Product>>> GetProduct(Guid id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _repository.GetProductByIdAsync(id);
             return Ok(product);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> PostProduct(Product product)
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            await _context.AddAsync(product);
-            await _context.SaveChangesAsync();
-            return Created("",product);
+            var productPrands = await _repository.GetProductBrandsAsync();
+            return Ok(productPrands);
         }
 
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProducttypes()
+        {
+            var productTypes = await _repository.GetProductTypesAsync();
+            return Ok(productTypes);
+        }
     }
 }
