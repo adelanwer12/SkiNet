@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repository;
@@ -41,6 +42,9 @@ namespace API
                 opt.UseSqlServer(_config.GetConnectionString("Default"));
             });
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductBrandsRepository, ProductBrandsRepository>();
+            services.AddScoped<IProductTypesRepository, ProductTypesRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +60,7 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
