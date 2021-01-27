@@ -13,7 +13,7 @@ namespace Core.Entities
         public string Description { get; set; }
 
         [Column(TypeName = "decimal(18, 2)")]
-        public decimal price { get; set; }
+        public decimal Price { get; set; }
 
         [Required, StringLength(50,MinimumLength = 4)]
         public string PictureUrl { get; set; }
