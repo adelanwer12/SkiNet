@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Extensions;
 using AutoMapper;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -33,18 +34,12 @@ namespace API
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
             services.AddDbContext<StoreContext>(opt => 
             {
                 opt.UseSqlServer(_config.GetConnectionString("Default"));
             });
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductBrandsRepository, ProductBrandsRepository>();
-            services.AddScoped<IProductTypesRepository, ProductTypesRepository>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddRepoServices();
+            services.AddSwaggerAndMapperServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,10 +48,10 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+                app.UseSwaggerDocumentation();
             }
 
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
             app.UseHttpsRedirection();
 
             app.UseRouting();
