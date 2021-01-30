@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
 using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +25,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturn>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<PaginationList<ProductToReturn>>>> GetProducts([FromQuery] ResourceParameters parameters)
         {
-            var products = await _productRepo.GetProductsAsync();
+            var products = await _productRepo.GetProductsAsync(parameters);
             var productsToReturn = _mapper.Map<IReadOnlyList<ProductToReturn>>(products);
-            return Ok(productsToReturn);
+            return Ok(new PaginationList<ProductToReturn>{PageSize = parameters.PageSize, PageNumber = parameters.PageNumber, ProductsCount = products.TotalCount, Data = productsToReturn});
         }
 
         [HttpGet("{id}")]
