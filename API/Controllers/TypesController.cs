@@ -17,7 +17,7 @@ namespace API.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProducttypes()
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductTypes()
         {
             var productTypes = await _typesRepo.GetProductTypesAsync();
             return Ok(productTypes);

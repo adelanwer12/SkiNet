@@ -3,8 +3,7 @@ namespace Core.Helpers
 {
     public class ResourceParameters
     {
-        public string OrderBy { get; set; } = "name";
-        public string OrderByDescending { get; set; }
+        public string Sort { get; set; }
         public string ProductBrand { get; set; }
         public string ProductType { get; set; }
         public string Search { get; set; }

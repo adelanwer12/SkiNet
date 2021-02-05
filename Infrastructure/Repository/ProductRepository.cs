@@ -28,37 +28,24 @@ namespace Infrastructure.Repository
             var products = _context.Products
                 .Include(t => t.ProductType)
                 .Include(b => b.ProductBrand) as IQueryable<Product>;
-            if (!string.IsNullOrWhiteSpace(parameters.OrderBy))
+            
+            if (!string.IsNullOrWhiteSpace(parameters.Sort))
             {
-                var orderBy = parameters.OrderBy.Trim().ToLowerInvariant();
-                products = orderBy switch
+                products = parameters.Sort.Trim() switch
                 {
-                    "price" => products.OrderBy(p => p.Price),
-                    "producttype" => products.OrderBy(p => p.ProductType),
-                    "productbrand" => products.OrderBy(p => p.ProductBrand),
+                    "priceAsc" => products.OrderBy(p => p.Price),
+                    "priceDesc" => products.OrderByDescending(p => p.Price),
                     _ => products.OrderBy(p => p.Name)
                 };
             }
 
-            if (!string.IsNullOrWhiteSpace(parameters.OrderByDescending))
-            {
-                var orderBy = parameters.OrderByDescending.Trim().ToLowerInvariant();
-                products = orderBy switch
-                {
-                    "price" => products.OrderByDescending(p => p.Price),
-                    "producttype" => products.OrderByDescending(p => p.ProductType),
-                    "productbrand" => products.OrderByDescending(p => p.ProductBrand),
-                    _ => products.OrderByDescending(p => p.Name)
-                };
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ProductBrand))
+            if (!string.IsNullOrWhiteSpace(parameters.ProductBrand) && parameters.ProductBrand != "All")
             {
                 var productBrand = parameters.ProductBrand.Trim();
                 products = products.Where(p => p.ProductBrand.Name == productBrand);
             }
 
-            if (!string.IsNullOrWhiteSpace(parameters.ProductType))
+            if (!string.IsNullOrWhiteSpace(parameters.ProductType) && parameters.ProductType != "All")
             {
                 var productType = parameters.ProductType.Trim();
                 products = products.Where(p => p.ProductType.Name == productType);

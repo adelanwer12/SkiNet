@@ -9,17 +9,17 @@ namespace API.Controllers
     [ApiController, Route("api/brands")]
     public class BrandsController : ControllerBase
     {
-        private readonly IProductBrandsRepository _BrandsRepo;
-        public BrandsController(IProductBrandsRepository BrandsRepo)
-        {
-            _BrandsRepo = BrandsRepo;
+        private readonly IProductBrandsRepository _brandsRepo;
 
+        public BrandsController(IProductBrandsRepository brandsRepo)
+        {
+            _brandsRepo = brandsRepo;
         }
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            var productPrands = await _BrandsRepo.GetProductBrandsAsync();
-            return Ok(productPrands);
+            var productBrands = await _brandsRepo.GetProductBrandsAsync();
+            return Ok(productBrands);
         }
     }
 }
