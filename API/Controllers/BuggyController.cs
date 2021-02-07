@@ -1,13 +1,50 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class BuggyController : Controller
+    [ApiController]
+    [Route("api/buggy")]
+    public class BuggyController : ControllerBase
     {
-        // GET
-        public IActionResult Index()
+        private readonly StoreContext _context;
+        public BuggyController(StoreContext context)
         {
-            return View();
+            _context = context;
+
+        }
+        [HttpGet("notfound")]
+        public ActionResult GetNotFoundRequest()
+        {
+            var thing = _context.Products.Find(42);
+
+            if (thing == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
+        [HttpGet("servererror")]
+        public ActionResult GetServerError()
+        {
+            var thing = _context.Products.Find(42);
+            var thingToReturn = thing.ToString();
+
+            return Ok();
+        }
+
+        [HttpGet("badrequest")]
+        public ActionResult GetBadRequest()
+        {
+            return BadRequest();
+        }
+
+        [HttpGet("badrequest/{id}")]
+        public ActionResult GetNotFoundRequest(int id)
+        {
+            return Ok();
         }
     }
 }

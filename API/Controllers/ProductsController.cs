@@ -36,6 +36,10 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<ProductToReturn>>> GetProduct(Guid id)
         {
             var product = await _productRepo.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
             var productToReturn = _mapper.Map<ProductToReturn>(product);
             return Ok(productToReturn);
         }
