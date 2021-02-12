@@ -16,6 +16,7 @@ namespace API.Extensions
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductBrandsRepository, ProductBrandsRepository>();
             services.AddScoped<IProductTypesRepository, ProductTypesRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
             return services;
         }
     }
