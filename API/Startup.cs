@@ -25,6 +25,8 @@ namespace API
         {
 
             services.AddControllers();
+            services.AddRepoServices();
+            services.AddApplicationServices();
             services.AddDbContext<StoreContext>(opt => 
             {
                 opt.UseSqlServer(_config.GetConnectionString("Default"));
@@ -34,9 +36,6 @@ namespace API
                 var configuration = ConfigurationOptions.Parse(_config.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
             });
-            services.AddRepoServices();
-            services.AddApplicationServices();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
