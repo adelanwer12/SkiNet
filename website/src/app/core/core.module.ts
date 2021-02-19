@@ -9,6 +9,7 @@ import { ServerErrorComponent } from './server-error/server-error.component';
 import {ToastrModule} from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import {BreadcrumbModule} from 'xng-breadcrumb';
+import { SeedDataComponent } from './seed-data/seed-data.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {BreadcrumbModule} from 'xng-breadcrumb';
     TestErrorComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    SeedDataComponent
   ],
   imports: [
     CommonModule,

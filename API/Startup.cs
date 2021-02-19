@@ -27,15 +27,8 @@ namespace API
             services.AddControllers();
             services.AddRepoServices();
             services.AddApplicationServices();
-            services.AddDbContext<StoreContext>(opt => 
-            {
-                opt.UseSqlServer(_config.GetConnectionString("Default"));
-            });
-            services.AddSingleton<IConnectionMultiplexer>(c =>
-            {
-                var configuration = ConfigurationOptions.Parse(_config.GetConnectionString("Redis"), true);
-                return ConnectionMultiplexer.Connect(configuration);
-            });
+            services.AddDataBaseServices(_config);
+            services.AddIdentityServices(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,13 +40,15 @@ namespace API
                 app.UseApplicationServices();
             }
 
-            app.UseStatusCodePagesWithReExecute("/errors/{0}");
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+            app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseEndpoints(endpoints =>
             {

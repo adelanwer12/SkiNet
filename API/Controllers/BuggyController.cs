@@ -1,4 +1,6 @@
-﻿using Infrastructure.Data;
+﻿using System;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,7 +18,7 @@ namespace API.Controllers
         [HttpGet("notfound")]
         public ActionResult GetNotFoundRequest()
         {
-            var thing = _context.Products.Find(42);
+            var thing = _context.Products.Find(Guid.Parse("2aaf1bc3-c704-47e3-9211-854e21449f4c"));
 
             if (thing == null)
             {
@@ -45,6 +47,13 @@ namespace API.Controllers
         public ActionResult GetNotFoundRequest(int id)
         {
             return Ok();
+        }
+
+        [HttpGet("testAuth")]
+        [Authorize]
+        public ActionResult<string> GetSecretText()
+        {
+            return "Secret Stuff";
         }
     }
 }

@@ -1,0 +1,7 @@
+<div class="container mt-5">
+  <button class="btn btn-primary mr-4" (click)="seedProductsBrands()">Seed Product Brands</button>
+  <button class="btn btn-primary mr-4" (click)="seedProductsTypes()">Seed Product Types</button>
+  <button class="btn btn-primary mr-4" (click)="seedProducts()">Seed Products</button>
+  <button class="btn btn-primary" (click)="seedUsers()">Seed Users </button>
+</div>
+<div class="container" *ngIf="response">{{response.error}}</div>
