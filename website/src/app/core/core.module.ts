@@ -10,6 +10,7 @@ import {ToastrModule} from 'ngx-toastr';
 import { SectionHeaderComponent } from './section-header/section-header.component';
 import {BreadcrumbModule} from 'xng-breadcrumb';
 import { SeedDataComponent } from './seed-data/seed-data.component';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SeedDataComponent } from './seed-data/seed-data.component';
       preventDuplicates: true,
     }),
     BreadcrumbModule,
+    SharedModule
   ],
   exports: [
     NavBarComponent,

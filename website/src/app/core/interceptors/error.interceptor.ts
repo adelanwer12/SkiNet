@@ -16,11 +16,11 @@ export class ErrorInterceptor implements HttpInterceptor{
         if (error){
           if (error.status === 400){
             if (error.error){
-              this.toastr.error(error.error, error.status);
+              this.toastr.error(error.error.title, error.status);
             }
           }
           if (error.status === 401){
-            this.toastr.error(error.error.title, error.error.status);
+            this.toastr.error(error.error, error.status);
           }
           if (error.status === 404){
             this.router.navigateByUrl('/not-found');

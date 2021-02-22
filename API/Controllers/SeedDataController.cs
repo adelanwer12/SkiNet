@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("seeddata")]
+    [Route("api/seeddata")]
     public class SeedDataController : ControllerBase
     {
         private readonly StoreContext _context;
